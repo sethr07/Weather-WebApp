@@ -1,0 +1,58 @@
+<!-- /*
+Internet Applications - Assignment 1
+Rahul Seth
+17302557
+Weather Web Application using express and vue.js
+
+client Side -->
+
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta charset="utf-8">
+      <title>Assignment 1 - Rahul Seth (17302557)</title>
+      <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+      <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    </head>
+    
+    <body>
+        <div id="app">
+            <h1>Weather Application Dashboard </h1>
+            <input v-model="city" placeholder="Enter city name">
+            <button v-on:click="EnterCity"> Get Weather Info </button>
+            <br>
+            <br> Getting Weather information for: {{city}}
+            <pre>{{weather_info}} </pre> 
+        </div>
+
+        <script>
+            var app = new Vue({
+                el: '#app',
+                data:{
+                    city: "",
+                    weather_info: "Will be displayed below."
+                },
+                methods:{
+                    EnterCity: getWeather
+                }
+            })
+
+            function getWeather(){
+                console.log("Calling for server.js")
+                console.log("\n");
+                let City = this.city;
+                console.log(City)
+                let url = ("http://localhost:3000/mysite/" + City);
+                console.log(url)
+                let data;
+                prom = axios.get(url)
+                prom.then(response => response.json)
+                prom.then((data) => {
+                    this.weather_info = data.data;
+                    console.log(data);
+                })
+                .catch(console.error)  
+            }
+        </script>
+    </body>
+</html>
